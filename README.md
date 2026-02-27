@@ -41,7 +41,20 @@ LLM_MODEL_NAME=your_model_name_here (e.g., gpt-4o, claude-3-5-sonnet)
 
 ### 4. 运行应用
 
+**推荐方式 (Windows)**:
+直接双击运行项目目录下的 `start.bat` 脚本即可。它会自动创建虚拟环境、安装依赖并启动应用。
+
+**手动方式**:
+
 ```bash
+# 创建并激活虚拟环境 (可选，推荐)
+python -m venv .venv
+.venv\Scripts\activate
+
+# 安装依赖 (首次运行或依赖变更时执行)
+pip install -r requirements.txt
+
+# 启动应用
 streamlit run main.py
 ```
 
