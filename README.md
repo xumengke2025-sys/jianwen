@@ -19,15 +19,7 @@ git clone https://github.com/xumengke2025-sys/jianwen.git
 cd jianwen
 ```
 
-### 2. 安装依赖
-
-确保您的环境已安装 Python 3.8+。
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. 配置环境变量
+### 2. 配置环境变量
 
 在项目根目录下创建一个 `.env` 文件，并填入您的 LLM API 配置信息：
 
@@ -39,22 +31,29 @@ LLM_MODEL_NAME=your_model_name_here (e.g., gpt-4o, claude-3-5-sonnet)
 
 > **注意**: 请勿将 `.env` 文件上传到版本控制系统中。
 
-### 4. 运行应用
+### 3. 运行应用 (Windows 推荐)
 
-**推荐方式 (Windows)**:
-直接双击运行项目目录下的 `start.bat` 脚本即可。它会自动创建虚拟环境、安装依赖并启动应用。
+**⚡ 一键启动**:
+直接双击项目目录下的 `start.bat` 脚本。
 
-**手动方式**:
+它会自动完成以下所有工作：
+1.  检测并创建本地虚拟环境
+2.  自动安装/更新所有依赖 (使用清华源加速)
+3.  启动应用
+
+### 4. 手动安装与运行 (其他系统/高级用户)
+
+如果您使用的是 Mac/Linux 或希望手动管理环境：
 
 ```bash
-# 创建并激活虚拟环境 (可选，推荐)
+# 1. 创建并激活虚拟环境
 python -m venv .venv
-.venv\Scripts\activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-# 安装依赖 (首次运行或依赖变更时执行)
+# 2. 安装依赖
 pip install -r requirements.txt
 
-# 启动应用
+# 3. 启动应用
 streamlit run main.py
 ```
 
