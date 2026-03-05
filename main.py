@@ -250,10 +250,11 @@ def analyze_chunk(chunk, chunk_id, total_chunks, catchphrases_str):
             ],
             response_format={"type": "json_object"}
         )
-        res = json.loads(response.choices[0].message.content)
+        raw_content = response.choices[0].message.content
+        res = json.loads(raw_content)
         if isinstance(res, list) and len(res) > 0:
-            return res[0] if isinstance(res[0], dict) else {"score": 0, "error": "Invalid JSON list"}
-        return res if isinstance(res, dict) else {"score": 0, "error": "Invalid JSON type"}
+            res = res[0]
+        return res if isinstance(res, dict) else {"score": 0, "rule1_score": 0, "rule2_score": 0, "rule3_score": 0, "key_issues": ["Unexpected JSON format"], "evidence": []}
     except Exception as e:
         return {"score": 0, "rule1_score": 0, "rule2_score": 0, "rule3_score": 0, "key_issues": [f"Chunk error: {str(e)}"], "evidence": []}
 
