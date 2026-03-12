@@ -35,43 +35,87 @@ CHUNK_SIZE = 4000  # Characters per chunk for processing
 # Forbidden Vocabulary Categories
 FORBIDDEN_VOCABULARY = {
     "神态描写类": {
-        "words": ["眼神", "嘴角", "睫毛", "空洞", "鼻音", "哭腔", "狡黠", "沙哑", "低沉"],
+        "words": [
+            "眼神", "嘴角", "睫毛", "空洞", "鼻音", "哭腔", "狡黠", "沙哑", "低沉", 
+            "微微挑眉", "微微上扬", "波涛汹涌", "深邃", "热切", "毫不遮掩", "不卑不亢", 
+            "锐利", "不易察觉", "眼神暗了暗", "瞳孔缩成针尖", "喉结滚了滚"
+        ],
         "logic": "避免主观神态解读，强制客观描写"
     },
     "动作修饰类": {
-        "words": ["泛白", "发白", "攥紧", "绷紧", "凝滞", "闪过", "投入", "呜咽", "擂鼓"],
+        "words": [
+            "泛白", "发白", "攥紧", "绷紧", "凝滞", "闪过", "投入", "呜咽", "擂鼓", 
+            "勾起", "炸开", "深吸一口气", "缓缓地说", "猛地", "闪烁", "裹挟", "扭曲", 
+            "撕裂", "洇出墨团", "无意识的摩挲", "指尖发白", "指尖发麻", "指尖发冷", 
+            "手指", "指节", "划过第x行"
+        ],
         "logic": "防止过度聚焦微观动作，如手指特写"
     },
+    "心理活动类": {
+        "words": [
+            "心中一凛", "心下了然", "一时间", "隐隐有了猜测", "心中一片平静", 
+            "心中一动", "不动声色", "小心翼翼", "沉吟片刻", "意识到", "感觉到", 
+            "心跳"
+        ],
+        "logic": "避免直接描写心理状态，提倡通过行为表现"
+    },
+    "俗套夸张类": {
+        "words": [
+            "行云流水", "不可估量", "无法想象", "无法用言语形容", "淬了毒的匕首", 
+            "目瞪口呆", "能塞下一个鸡蛋", "还要冰冷", "透露出的寒意", "下降了几度", 
+            "显得更加……", "xx的眼神", "嘴角勾起一个……的弧度", "……看得目瞪口呆", 
+            "像在看一个……的人", "幼兽般的呜咽"
+        ],
+        "logic": "避免网文或AI常用的陈腐夸张修辞"
+    },
+    "逻辑连接类": {
+        "words": [
+            "取而代之的是", "接下来", "话锋一转", "由此可见", "换言之", "总而言之", 
+            "值得注意的是", "不可否认", "这一刻", "这一次", "再次", "首先...其次...最后...", 
+            "某种意义上", "简而言之", "归根结底", "不仅...而且...", "一方面...另一方面...", 
+            "当...突然"
+        ],
+        "logic": "减少僵化的逻辑连接词"
+    },
+    "抽象词汇类": {
+        "words": [
+            "复杂的", "多层面的", "核心", "关键", "框架", "机制", "模式", "体系", 
+            "赋能", "驱动", "引领", "重塑", "革新", "突破", "挑战", "机遇", "趋势", 
+            "愿景", "蜕变", "终极", "隐喻", "暗喻", "公式"
+        ],
+        "logic": "减少AI常用的宏大叙事或商业黑话"
+    },
+    "特定名词类": {
+        "words": [
+            "第三根肋骨", "皮带扣", "第三颗纽扣", "第三根手指", "钢笔", "纽扣", 
+            "第三（次/个/重...）", "防冻液", "冷却液", "电解液", "电子流", "磁悬浮"
+        ],
+        "logic": "针对特定套路化细节或科技词汇的检测"
+    },
     "抽象感知类": {
-        "words": ["感到", "知道", "复杂", "生理性", "难以言喻", "四肢百骸"],
+        "words": [
+            "感到", "知道", "复杂", "生理性", "难以言喻", "四肢百骸", "清冷", 
+            "沸腾", "漆黑", "窒息", "剧痛", "纯粹", "喧嚣", "静谧"
+        ],
         "logic": "将抽象情绪转化为可观察行为"
     },
     "比喻禁用类": {
-        "words": ["羽毛", "湖面", "心湖", "涟漪", "石子", "手术刀", "弓弦"],
+        "words": [
+            "羽毛", "湖面", "心湖", "涟漪", "石子", "手术刀", "弓弦", "投石入水", 
+            "交响曲", "不是X而是X"
+        ],
         "logic": "避免陈腐比喻"
     },
-    "程度副词类": {
-        "words": ["几分", "一丝", "某种", "近乎", "微不可查"],
-        "logic": "减少不确定性表达"
-    },
-    "否定结构类": {
-        "words": ["不是", "不再", "没什么", "而是"],
-        "logic": "简化反转句式"
-    },
-    "冗余修饰类": {
-        "words": ["更是", "如同", "仿佛", "就像", "带着", "不容"],
-        "logic": "减少无效修饰"
+    "程度修饰类": {
+        "words": [
+            "几分", "一丝", "某种", "近乎", "微不可查", "几不可察", "难以置信", 
+            "不容置疑"
+        ],
+        "logic": "减少不确定性或过度修饰表达"
     }
 }
 
-DEFAULT_CATCHPHRASES = [
-    "投石入水", "不是X而是X", "交响曲", "喧嚣", "静谧", "蜕变", "不可否认",
-    "值得注意的是", "总而言之", "首先...其次...最后...", "某种意义上", "由此可见",
-    "换言之", "简而言之", "归根结底", "复杂的", "多层面的", "不仅...而且...",
-    "一方面...另一方面...", "不可或缺", "至关重要", "显而易见", "毫无疑问",
-    "核心", "关键", "框架", "机制", "模式", "体系", "赋能", "驱动",
-    "引领", "重塑", "革新", "突破", "挑战", "机遇", "趋势", "愿景"
-]
+DEFAULT_CATCHPHRASES = [] # Will be populated by loop below
 
 # Append forbidden words to DEFAULT_CATCHPHRASES
 for category, data in FORBIDDEN_VOCABULARY.items():
@@ -87,81 +131,140 @@ st.set_page_config(
         initial_sidebar_state="expanded"
     )
 
-# Custom CSS for "Clean Light" theme
+# Custom CSS for "Vintage Paper" theme
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Noto+Serif+SC:wght@400;700&display=swap');
+
     /* Global Background & Text */
     .stApp {
-        background-color: #ffffff;
-        color: #31333F;
+        background-color: #F2E8D5;
+        background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+        color: #3e2723;
+        font-family: 'IM Fell English', 'Noto Serif SC', serif;
     }
 
     /* Titles & Headers */
-    h1, h2, h3 {
-        color: #1f77b4 !important;
-        font-family: 'Segoe UI', sans-serif;
-        font-weight: 600;
+    h1, h2, h3, h4, h5, h6 {
+        color: #5d4037 !important;
+        font-family: 'Cinzel', 'Noto Serif SC', serif !important;
+        font-weight: 700;
+        text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
     }
 
     /* Metric Values */
     [data-testid="stMetricValue"] {
-        color: #2ca02c;
-        font-size: 2.5rem !important;
+        color: #8B4513;
+        font-family: 'Cinzel', serif;
+        font-size: 2.2rem !important;
+    }
+    
+    [data-testid="stMetricLabel"] {
+        color: #5d4037;
+        font-family: 'Noto Serif SC', serif;
+        font-weight: bold;
     }
 
     /* Sidebar Styling */
     section[data-testid="stSidebar"] {
-        background-color: #f8f9fa;
-        border-right: 1px solid #dee2e6;
+        background-color: #E6DCC3;
+        border-right: 2px solid #8B4513;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     }
     
-    /* Buttons - Modern Glassmorphism (Light) */
+    /* Buttons - Vintage Style */
     .stButton>button {
-        background: linear-gradient(145deg, #ffffff, #f0f2f6);
-        color: #31333F;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        transition: all 0.2s ease-in-out;
-        font-weight: 600;
+        background: linear-gradient(to bottom, #fdfbf7, #e6dcc3);
+        color: #3e2723;
+        border: 2px solid #8B4513;
+        border-radius: 4px;
+        box-shadow: 2px 2px 0px #8B4513;
+        transition: all 0.1s ease-in-out;
+        font-family: 'Noto Serif SC', serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     .stButton>button:hover {
-        background: linear-gradient(145deg, #f0f2f6, #e6e8eb);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        border-color: #1f77b4;
+        background: #fdfbf7;
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0px #8B4513;
+        color: #8B4513;
+        border-color: #5d4037;
+    }
+    .stButton>button:active {
+        transform: translate(2px, 2px);
+        box-shadow: none;
     }
 
     /* Text Areas & Inputs */
-    .stTextArea>div>div>textarea {
-        background-color: #ffffff;
-        color: #31333F;
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
+    .stTextArea>div>div>textarea, .stTextInput>div>div>input {
+        background-color: #fdfbf7;
+        color: #3e2723;
+        border: 2px solid #8B4513;
+        border-radius: 2px;
+        font-family: 'Noto Serif SC', serif;
+        box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
     }
-    .stTextArea>div>div>textarea:focus {
-        border-color: #1f77b4;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2);
+    .stTextArea>div>div>textarea:focus, .stTextInput>div>div>input:focus {
+        border-color: #CD5C5C;
+        box-shadow: 0 0 5px rgba(205, 92, 92, 0.3);
     }
 
-    /* Cards/Containers */
+    /* Cards/Containers/Expanders */
     div[data-testid="stExpander"] {
-        background-color: #ffffff;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        background-color: #fdfbf7;
+        border: 2px solid #8B4513;
+        border-radius: 4px;
+        box-shadow: 3px 3px 0px rgba(139, 69, 19, 0.2);
+    }
+    
+    div[data-testid="stExpander"] details {
+        border-radius: 4px;
+    }
+
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: transparent;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: #E6DCC3;
+        border: 1px solid #8B4513;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+        color: #5d4037;
+        font-family: 'Noto Serif SC', serif;
+    }
+    .stTabs [data-baseweb="tab"][aria-selected="true"] {
+        background-color: #fdfbf7;
+        border-bottom: 2px solid #fdfbf7;
+        font-weight: bold;
     }
     
     /* Success/Warning/Error Messages */
     .stAlert {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        color: #31333F;
+        background-color: #fdfbf7;
+        border: 2px solid #8B4513;
+        color: #3e2723;
+        font-family: 'Noto Serif SC', serif;
+        box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
     }
     
     /* Progress Bar */
     .stProgress > div > div > div > div {
-        background-image: linear-gradient(to right, #2ca02c, #98df8a);
+        background-image: linear-gradient(to right, #8B4513, #CD5C5C);
+        border: 1px solid #3e2723;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 10px;
+        background: #E6DCC3;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #8B4513;
+        border-radius: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -232,15 +335,17 @@ def fetch_latest_catchphrases():
 def analyze_chunk(chunk, chunk_id, total_chunks, catchphrases_str):
     try:
         system_prompt = (
-            f"You are an AI text detection expert. You are analyzing chunk {chunk_id + 1}/{total_chunks}. "
-            f"Focus on three distinct dimensions: language fingerprints, logic/context breaks, attention artifacts. "
-            f"Catchphrase lexicon: {catchphrases_str}. "
-            "Return strict JSON with keys: "
-            "score (0-100, overall AI probability), "
-            "rule1_score (0-100, language fingerprints & catchphrase density), "
-            "rule2_score (0-100, logic and context inconsistencies), "
-            "rule3_score (0-100, attention artifacts & pacing issues), "
-            "key_issues (string list), evidence (string list)."
+            f"你是一位 AI 文本检测专家。你正在分析第 {chunk_id + 1}/{total_chunks} 个文本片段。 "
+            "请从以下三个维度进行分析：语言指纹（Language Fingerprints）、逻辑与上下文断层（Logic/Context Breaks）、注意力机制伪聚焦（Attention Artifacts）。"
+            f"参考口癖词库：{catchphrases_str}。 "
+            "请返回严格的 JSON 格式，包含以下字段： "
+            "score (0-100, 整体 AI 疑似度分数), "
+            "rule1_score (0-100, 语言指纹与口癖密度得分), "
+            "rule2_score (0-100, 逻辑不一致与感官冲突得分), "
+            "rule3_score (0-100, 注意力伪聚焦与节奏问题得分), "
+            "key_issues (字符串列表，描述发现的主要问题), "
+            "evidence (字符串列表，提供具体的文本证据)。"
+            "所有返回内容（key_issues, evidence）必须使用中文。"
         )
         response = client.chat.completions.create(
             model=MODEL_NAME,
@@ -273,9 +378,30 @@ def detect_catchphrases_regex(text, catchphrases_list, freq_threshold=1):
         phrase = phrase.strip()
         if not phrase: continue
 
-        # Escape special regex chars
+        # Handle wildcards
         pattern = re.escape(phrase)
-        matches = list(re.finditer(pattern, text))
+        pattern = pattern.replace(re.escape("……"), ".{1,10}")
+        pattern = pattern.replace(re.escape("xx"), ".{1,10}")
+        
+        # Handle custom regex patterns like "第三（次/个/重...）"
+        if "（" in phrase and "）" in phrase and "/" in phrase:
+            # Extract content inside brackets
+            inner = re.search(r'（(.*?)）', phrase)
+            if inner:
+                options = inner.group(1).split('/')
+                # Escape options and join with |
+                regex_options = f"({'|'.join([re.escape(opt.replace('...', '')) for opt in options])})"
+                # Replace the bracket part with regex options
+                pattern = re.sub(r'\\（.*?\\）', regex_options, pattern)
+                # Handle the trailing ... if it was inside
+                pattern = pattern.replace(re.escape("..."), ".*?")
+
+        try:
+            matches = list(re.finditer(pattern, text))
+        except re.error:
+            # Fallback to literal if regex is invalid
+            pattern = re.escape(phrase)
+            matches = list(re.finditer(pattern, text))
 
         if matches:
             stats[phrase] = len(matches)
@@ -409,10 +535,10 @@ def aggregate_results(chunk_results):
     avg_rule3 = rule3_total / n
 
     # Determine intensity based on average score
-    if avg_score < 30: intensity = "Level 1 (微量)"
-    elif avg_score < 60: intensity = "Level 2 (辅助)"
-    elif avg_score < 80: intensity = "Level 3 (生成)"
-    else: intensity = "Level 4 (严重)"
+    if avg_score < 30: intensity = "第 1 级 (微量 AI 痕迹)"
+    elif avg_score < 60: intensity = "第 2 级 (疑似辅助生成)"
+    elif avg_score < 80: intensity = "第 3 级 (高度疑似 AI 生成)"
+    else: intensity = "第 4 级 (确认为 AI 生成)"
 
     # Construct a Logic Graph from chunks for visualization
     # We map "AI Score" (High=Bad) to "Logic Score" (High=Good) roughly as (100 - score) / 10
@@ -575,21 +701,22 @@ def analyze_text(text, freq_threshold, window_size):
 
     else:
         system_prompt = (
-            "You are an AI writing detector. Evaluate the text and return strict JSON. "
-            "Signals: language fingerprints, logic/context breaks, attention artifacts. "
-            f"Frequency threshold: > {freq_threshold} times in {window_size} chars. "
-            f"Regex pre-check: {json.dumps(regex_stats, ensure_ascii=False)}. "
-            f"Metrics: std_dev_len={text_metrics['std_dev_len']}, ttr={text_metrics['ttr']}, "
-            f"burstiness_score={text_metrics['burstiness_score']}. "
-            f"Catchphrase lexicon: {catchphrases_str}. "
-            "Output keys: total_score, intensity_level, summary, "
-            "rule1_analysis (score, reason, evidence list), "
-            "rule2_analysis (score, reason, evidence list), "
-            "rule3_analysis (score, reason, evidence list), "
-            "logic_graph (nodes list, transitions list with source/target/label/score 0-10)."
+            "你是一位专业的 AI 文本检测专家。请评估输入的文本并返回严格的 JSON 格式。 "
+            "评估信号：语言指纹、逻辑/上下文断层、注意力机制伪聚焦。 "
+            f"词频阈值：在 {window_size} 字符窗口内出现超过 {freq_threshold} 次。 "
+            f"正则预检结果: {json.dumps(regex_stats, ensure_ascii=False)}。 "
+            f"统计指标: 句长标准差={text_metrics['std_dev_len']}, 词汇丰富度={text_metrics['ttr']}, "
+            f"爆发度得分={text_metrics['burstiness_score']}。 "
+            f"参考词库: {catchphrases_str}。 "
+            "输出 JSON 的键名必须为：total_score, intensity_level, summary, "
+            "rule1_analysis (包含 score, reason, evidence 列表), "
+            "rule2_analysis (包含 score, reason, evidence 列表), "
+            "rule3_analysis (包含 score, reason, evidence 列表), "
+            "logic_graph (包含 nodes 列表, transitions 列表，每个 transition 包含 source/target/label/score 0-10)。"
+            "所有返回的描述性文本（summary, reason, evidence, intensity_level, label）必须使用中文。"
         )
 
-        user_prompt = f"Analyze this text:\n\n{text}"
+        user_prompt = f"请分析以下文本：\n\n{text}"
 
         try:
             response = client.chat.completions.create(
@@ -601,20 +728,24 @@ def analyze_text(text, freq_threshold, window_size):
                 response_format={"type": "json_object"}
             )
             llm_result = json.loads(response.choices[0].message.content)
-            if isinstance(llm_result, list) and len(llm_result) > 0:
-                llm_result = llm_result[0]
-            if not isinstance(llm_result, dict):
-                llm_result = {"error": "Invalid response format"}
         except Exception as e:
             return f"Error: {str(e)}", None, None, False
 
-    # Robustness: Ensure llm_result is a dict (some models might return a list containing the dict)
+    # Robustness check: Some LLMs might wrap the JSON object in a list, or return a non-dict.
     if isinstance(llm_result, list) and len(llm_result) > 0:
         llm_result = llm_result[0]
     
     if not isinstance(llm_result, dict):
-        # Fallback if it's still not a dict
-        llm_result = {"total_score": 0, "intensity_level": "Error", "summary": f"Unexpected LLM output format: {type(llm_result)}"}
+        # Last resort fallback to empty dict with error summary
+        llm_result = {
+            "total_score": 0, 
+            "intensity_level": "Analysis Error", 
+            "summary": "AI 分析返回格式异常，请重试。",
+            "rule1_analysis": {"score": 0, "reason": "分析失败", "evidence": []},
+            "rule2_analysis": {"score": 0, "reason": "分析失败", "evidence": []},
+            "rule3_analysis": {"score": 0, "reason": "分析失败", "evidence": []},
+            "logic_graph": {"nodes": [], "transitions": []}
+        }
 
     # Merge Regex stats & Text Metrics into LLM result
     llm_result["catchphrase_stats"] = regex_stats
@@ -637,7 +768,7 @@ with st.sidebar:
     st.image("https://img.icons8.com/color/96/artificial-intelligence.png", width=80)
     st.title("AI 检测工具 Pro")
 
-    with st.expander("设置 (Settings)", expanded=False):
+    with st.expander("设置与词库 (Settings)", expanded=False):
         st.write("自定义 AI 口癖词库")
         if "custom_catchphrases" not in st.session_state:
             st.session_state.custom_catchphrases = ", ".join(DEFAULT_CATCHPHRASES)
@@ -650,8 +781,8 @@ with st.sidebar:
             key="catchphrases_input_area"
         )
 
-        if st.button("联网更新词库 (Search & Update)", help="抓取最新常见 AI 套话"):
-            with st.spinner("正在联网搜索..."):
+        if st.button("联网同步最新 AI 词库 (Sync)", help="抓取互联网上最新的 AI 套话"):
+            with st.spinner("正在联网搜索最新 AI 词汇..."):
                 new_phrases = fetch_latest_catchphrases()
                 if "Error" in new_phrases:
                     st.error(f"更新失败: {new_phrases}")
@@ -665,19 +796,19 @@ with st.sidebar:
 
         if catchphrases_input != st.session_state.custom_catchphrases:
             st.session_state.custom_catchphrases = catchphrases_input
-            st.success("词库已更新")
+            st.success("词库已保存")
 
         st.divider()
-        st.write("检测灵敏度")
+        st.write("检测灵敏度参数")
         freq_threshold = st.slider(
-            "词频阈值 (Frequency Threshold)",
+            "词频触发阈值 (Frequency Threshold)",
             min_value=1,
             max_value=10,
             value=3,
-            help="同一关键词在窗口内出现次数超过该值才标记。"
+            help="同一关键词在分析窗口内出现次数超过该值才会被标记。"
         )
         window_size = st.number_input(
-            "窗口大小 (Window Size)",
+            "分析窗口大小 (Window Size)",
             min_value=100,
             max_value=2000,
             value=500,
@@ -685,9 +816,9 @@ with st.sidebar:
             help="统计词频时使用的字符窗口大小。"
         )
 
-    st.info("检测维度：语言指纹、逻辑上下文、注意力伪聚焦")
+    st.info("核心检测维度：语言指纹、逻辑上下文、注意力机制伪聚焦")
     st.divider()
-    st.write("Current Model")
+    st.write("当前运行模型")
     st.code(MODEL_NAME, language="text")
 
 # Main Content
@@ -724,7 +855,7 @@ with tab_input_text:
     with col2:
         example_option = st.selectbox(
             "选择示例类型",
-            ["高 AI 含量文本 (AI Text)", "人类写作文本 (Human Text)"],
+            ["AI 写作文本 (含逻辑错误)", "人类写作文本 (真实感官)"],
             index=0,
             label_visibility="collapsed"
         )
@@ -789,33 +920,33 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
                     col_score, col_meta = st.columns([1.5, 2])
                     
                     with col_score:
-                        # Circular Gauge for AI Risk
+                        # Circular Gauge for AI Risk (Vintage Style)
                         fig_gauge = go.Figure(go.Indicator(
                             mode = "gauge+number",
                             value = score,
                             domain = {'x': [0, 1], 'y': [0, 1]},
-                            title = {'text': "AI 疑似度", 'font': {'size': 24}},
-                            number = {'suffix': "%", 'font': {'size': 40}},
+                            title = {'text': "AI 疑似度", 'font': {'size': 24, 'family': "Cinzel, serif", 'color': "#5d4037"}},
+                            number = {'suffix': "%", 'font': {'size': 40, 'family': "Cinzel, serif", 'color': "#8B4513"}},
                             gauge = {
-                                'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                                'bar': {'color': "#1f77b4"},
-                                'bgcolor': "white",
+                                'axis': {'range': [None, 100], 'tickwidth': 2, 'tickcolor': "#5d4037", 'tickfont': {'family': "Noto Serif SC", 'color': "#5d4037"}},
+                                'bar': {'color': "#8B4513", 'line': {'color': "#3e2723", 'width': 1}},
+                                'bgcolor': "#fdfbf7",
                                 'borderwidth': 2,
-                                'bordercolor': "gray",
+                                'bordercolor': "#5d4037",
                                 'steps': [
-                                    {'range': [0, 30], 'color': '#eaf7ee'},
-                                    {'range': [30, 70], 'color': '#fff6e5'},
-                                    {'range': [70, 100], 'color': '#fdecea'}],
+                                    {'range': [0, 30], 'color': '#A9C5A0'},  # Muted Green
+                                    {'range': [30, 70], 'color': '#F4E7C5'},  # Parchment Yellow
+                                    {'range': [70, 100], 'color': '#DFA09E'}], # Faded Red
                                 'threshold': {
-                                    'line': {'color': "red", 'width': 4},
+                                    'line': {'color': "#8B0000", 'width': 4},
                                     'thickness': 0.75,
                                     'value': 80}}))
                         
-                        fig_gauge.update_layout(height=300, margin=dict(l=30, r=30, t=50, b=20), paper_bgcolor='rgba(0,0,0,0)')
+                        fig_gauge.update_layout(height=300, margin=dict(l=30, r=30, t=50, b=20), paper_bgcolor='rgba(0,0,0,0)', font={'family': "Noto Serif SC"})
                         st.plotly_chart(fig_gauge, use_container_width=True)
 
                     with col_meta:
-                        st.markdown(f"### 鉴定结论: <span style='color: #1f77b4;'>{intensity.split('(')[0]}</span>", unsafe_allow_html=True)
+                        st.markdown(f"### 鉴定结论: <span style='color: #8B4513; font-family: Cinzel;'>{intensity.split('(')[0]}</span>", unsafe_allow_html=True)
                         st.markdown(f"**风险评级**: {intensity.split('(')[-1].replace(')', '') if '(' in intensity else intensity}")
                         
                         # Summary Box
@@ -833,17 +964,17 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
 
                     # 2. Detailed Analysis Tabs
                     st.divider()
-                    tab_charts, tab_highlight, tab_deep, tab_method = st.tabs(["📊 酷炫图表 (Charts)", "🖍️ 文本高亮 (Highlight)", "🔍 深度分析 (Analysis)", "📖 方法论 (Methodology)"])
+                    tab_charts, tab_highlight, tab_deep, tab_method = st.tabs(["📊 数据图表", "🖍️ 词汇高亮", "🔍 深度报告", "📖 检测原理"])
                     
                     with tab_charts:
-                        st.subheader("AI 特征多维可视化")
+                        st.subheader("AI 特征可视化分析")
                         
                         # Display Statistical Metrics
                         metrics = result.get("text_metrics", {})
                         m1, m2, m3 = st.columns(3)
-                        m1.metric("平均句长 (Avg Len)", f"{metrics.get('avg_len', 0)} 词", help="AI 生成文本通常句长适中且平均")
-                        m2.metric("句子长度标准差 (Burstiness)", f"{metrics.get('std_dev_len', 0)}", delta="高 (Human)" if metrics.get('std_dev_len', 0) > 20 else "低 (AI)", delta_color="normal" if metrics.get('std_dev_len', 0) > 20 else "inverse", help="标准差越高，代表句式变化越丰富（人类特征）")
-                        m3.metric("词汇丰富度 (TTR)", f"{metrics.get('ttr', 0):.3f}", delta="高 (Human)" if metrics.get('ttr', 0) > 0.5 else "低 (AI)", delta_color="normal" if metrics.get('ttr', 0) > 0.5 else "inverse", help="Type-Token Ratio: 唯一词汇占比")
+                        m1.metric("平均句长", f"{metrics.get('avg_len', 0)} 字符", help="AI 生成文本通常句长适中且平均")
+                        m2.metric("爆发度 (Burstiness)", f"{metrics.get('std_dev_len', 0)}", delta="变化丰富 (人类)" if metrics.get('std_dev_len', 0) > 20 else "节奏单调 (AI)", delta_color="normal" if metrics.get('std_dev_len', 0) > 20 else "inverse", help="句长标准差越高，代表句式变化越丰富（人类特征）")
+                        m3.metric("丰富度 (TTR)", f"{metrics.get('ttr', 0):.3f}", delta="丰富 (人类)" if metrics.get('ttr', 0) > 0.5 else "低 (AI)", delta_color="normal" if metrics.get('ttr', 0) > 0.5 else "inverse", help="词汇唯一性占比（Type-Token Ratio）")
                         
                         st.divider()
                         
@@ -851,12 +982,10 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
                         
                         with col_chart1:
                             # 1. Radar Chart (Plotly)
-                            # Update categories to include statistical metrics
-                            categories = ['语言指纹', '逻辑上下文', '注意力伪聚焦', '低爆发度(AI)', '重复度(AI)']
+                            categories = ['语言指纹', '逻辑上下文', '注意力机制', '低爆发度(AI)', '词汇重复度(AI)']
                             
-                            # Get metrics safely
                             metrics = result.get("text_metrics", {})
-                            burst_score = metrics.get("burstiness_score", 50) # Default mid
+                            burst_score = metrics.get("burstiness_score", 50) 
                             perp_score = metrics.get("perplexity_score", 50)
                             
                             r_values = [
@@ -867,13 +996,12 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
                                 perp_score
                             ]
                             
-                            # Hover descriptions for Radar Chart
                             radar_descriptions = [
-                                "分析词汇选择、句式结构等语言统计特征",
-                                "检测上下文逻辑连贯性、感官描写深度",
-                                "识别无效细节描写和注意力分散现象",
-                                "句子长度变化少，节奏单调（AI特征）",
-                                "文本困惑度低，缺乏惊喜欢度（AI特征）"
+                                "词汇选择、句式结构等统计特征",
+                                "上下文逻辑连贯性、感官描写深度",
+                                "无效细节描写和注意力分散现象",
+                                "句子长度变化少，节奏单调",
+                                "文本困惑度低，缺乏词汇惊喜感"
                             ]
                             
                             # Close the loop
@@ -887,23 +1015,23 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
                                 theta=categories,
                                 fill='toself',
                                 name='AI 特征值',
-                                line_color='#1f77b4',
-                                fillcolor='rgba(31, 119, 180, 0.2)',
+                                line_color='#8B4513',
+                                fillcolor='rgba(139, 69, 19, 0.4)',
                                 hovertemplate='<b>%{theta}</b><br>得分: %{r}<br>%{customdata}<extra></extra>',
                                 customdata=radar_descriptions
                             ))
                             fig_radar.update_layout(
                                 polar=dict(
-                                    radialaxis=dict(visible=True, range=[0, 100], showline=False, gridcolor='rgba(0,0,0,0.1)'),
-                                    angularaxis=dict(gridcolor='rgba(0,0,0,0.1)'),
-                                    bgcolor='rgba(0,0,0,0)'
+                                    radialaxis=dict(visible=True, range=[0, 100], showline=True, linecolor='#5d4037', gridcolor='rgba(93, 64, 55, 0.2)', tickfont={'family': "Noto Serif SC"}),
+                                    angularaxis=dict(gridcolor='rgba(93, 64, 55, 0.2)', tickfont={'family': "Noto Serif SC", 'size': 12, 'color': "#3e2723"}),
+                                    bgcolor='#fdfbf7'
                                 ),
                                 showlegend=False,
-                                title=dict(text="🛡️ AI 特征多维雷达图", font=dict(color='#31333F')),
+                                title=dict(text="🛡️ AI 特征多维雷达图", font=dict(color='#5d4037', family="Cinzel, serif", size=20)),
                                 height=350,
                                 margin=dict(l=40, r=40, t=40, b=40),
                                 paper_bgcolor='rgba(0,0,0,0)',
-                                font=dict(color='#31333F')
+                                font=dict(color='#3e2723', family="Noto Serif SC")
                             )
                             st.plotly_chart(fig_radar, use_container_width=True)
 
@@ -921,20 +1049,24 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
                                     title="⚠️ AI 口癖频次 (颜色代表是否超阈值)",
                                     labels={'count': '出现频次', 'word': '口癖词汇'},
                                     color='above_threshold',
-                                    color_discrete_map={True: '#1f77b4', False: '#d3d3d3'},
-                                    template="plotly_white"
+                                    color_discrete_map={True: '#8B4513', False: '#A9A9A9'},
+                                    template="simple_white"
                                 )
                                 fig_bar.update_traces(
                                     hovertemplate='<b>%{y}</b><br>出现次数: %{x}<br>状态: %{customdata}<extra></extra>',
-                                    customdata=["超阈值 (高风险)" if val else "未达阈值 (低关注)" for val in df_freq['above_threshold']]
+                                    customdata=["超阈值 (高风险)" if val else "未达阈值 (低关注)" for val in df_freq['above_threshold']],
+                                    marker_line_color='#3e2723',
+                                    marker_line_width=1.5
                                 )
                                 fig_bar.update_layout(
                                     height=350, 
-                                    yaxis={'categoryorder':'total ascending'},
+                                    yaxis={'categoryorder':'total ascending', 'tickfont': {'family': "Noto Serif SC"}},
+                                    xaxis={'tickfont': {'family': "Noto Serif SC"}, 'gridcolor': 'rgba(93, 64, 55, 0.1)'},
                                     showlegend=False,
                                     plot_bgcolor='rgba(0,0,0,0)',
                                     paper_bgcolor='rgba(0,0,0,0)',
-                                    font=dict(color='#31333F')
+                                    font=dict(color='#3e2723', family="Noto Serif SC"),
+                                    title_font=dict(family="Cinzel, serif", size=18, color="#5d4037")
                                 )
                                 st.plotly_chart(fig_bar, use_container_width=True)
                             else:
@@ -954,22 +1086,24 @@ if st.button("开始深度鉴定", type="primary", use_container_width=True):
                                 color='word', 
                                 title="📍 AI 特征词在文本中的分布位置",
                                 labels={'start': '文本字符位置', 'word': '检测到的词汇'},
-                                opacity=0.7,
-                                template="plotly_white"
+                                opacity=0.8,
+                                template="simple_white",
+                                color_discrete_sequence=px.colors.qualitative.Antique
                             )
                             fig_scatter.update_traces(
-                                marker=dict(size=10, symbol='circle', line=dict(width=1, color='Gray')),
+                                marker=dict(size=12, symbol='diamond', line=dict(width=1, color='#3e2723')),
                                 hovertemplate='<b>%{y}</b><br>位置: %{x}<br>说明: 密集分布可能暗示AI生成的重复模式<extra></extra>'
                             )
                             fig_scatter.update_layout(
-                                xaxis=dict(title='文本进度 (字符位置)', showgrid=False),
-                                yaxis=dict(categoryorder='category ascending', showgrid=True, gridcolor='rgba(0,0,0,0.1)'),
+                                xaxis=dict(title='文本进度 (字符位置)', showgrid=False, zeroline=True, zerolinecolor='#8B4513'),
+                                yaxis=dict(categoryorder='category ascending', showgrid=True, gridcolor='rgba(93, 64, 55, 0.1)'),
                                 showlegend=False,
                                 height=400,
                                 hovermode="closest",
                                 plot_bgcolor='rgba(0,0,0,0)',
                                 paper_bgcolor='rgba(0,0,0,0)',
-                                font=dict(color='#31333F')
+                                font=dict(color='#3e2723', family="Noto Serif SC"),
+                                title_font=dict(family="Cinzel, serif", size=18, color="#5d4037")
                             )
                             st.plotly_chart(fig_scatter, use_container_width=True)
                         else:

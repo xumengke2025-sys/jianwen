@@ -6,3 +6,4 @@ python-docx
 plotly
 pandas
 duckduckgo-search
+jieba
